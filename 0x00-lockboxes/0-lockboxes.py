@@ -5,23 +5,22 @@ sequentially from 0 to n - 1 and each box may contain keys to the other boxes.
 """
 
 
-def join(T, R):
-    res = []
-    for e in R:
-        res += T[e]
-    return res
-
-
 def canUnlockAll(boxes):
-    index = 0
-    total = list(set(boxes[0]) | {0})
-    added = True
-    while added:
-        added = False
-        for j in join(boxes, total[index:]):
-            if j not in total:
-                total.append(j)
-                index += 1
-                added = True
+    """
+    Method that checks if every box can be opened
+    """
+    opened = [0]
 
-    return len(total) == len(boxes)
+    if len(boxes) == 0:
+        return False
+    for boxIndex in opened:
+        for key in boxes[boxIndex]:
+            if key not in opened:
+                if key < len(boxes):
+                    opened.append(key)
+                    boxIndex = key
+        print(opened)
+
+    if len(opened) == len(boxes):
+        return True
+    return False
